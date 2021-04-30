@@ -1,0 +1,57 @@
+version: '3.1'
+services:
+  proxy:
+    image: nginx
+    container_name: proxy
+    volumes:
+    - ./src/etc/docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    - ./src/etc/docker/nginx/.htpasswd:/etc/nginx/.htpasswd:ro
+    ports:
+      - 80:80
+    depends_on:
+      - color1
+      - color2
+      - color3
+      - color4
+  color1:
+    build:
+      context: .
+    container_name: color1
+    environment:
+      - DEMO_BACKGROUND_COLOR=orange
+      - DEMO_LOG_LEVEL=debug    
+    command: ["-Xmx256M"]
+  color2:
+    build:
+      context: .
+    container_name: color2
+    environment:
+      - DEMO_BACKGROUND_COLOR=pink
+      - DEMO_LOG_LEVEL=debug    
+    command: ["-Xmx256M"]
+  color3:
+    build:
+      context: .
+    container_name: color3
+    environment:
+      - DEMO_BACKGROUND_COLOR=green
+      - DEMO_LOG_LEVEL=debug    
+    command: ["-Xmx256M"]
+  color4:
+    build:
+      context: .
+    container_name: color4
+    environment:
+      - DEMO_BACKGROUND_COLOR=brown
+      - DEMO_LOG_LEVEL=debug    
+    command: ["-Xmx256M"]
+  database:
+    image: 'mongo'
+    container_name: colorMongo
+    restart: always
+    environment:
+      - MONGO_INITDB_DATABASE=colordb
+    volumes:
+      - ./mongo-volume:/data/db
+    ports:
+      - '27017:27017'

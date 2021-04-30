@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <contextName>lsports-client</contextName>
+    <jmxConfigurator/>
+    
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>docker-demo: %d{yyyy-MM-dd_HH:mm:ss.SSS} %-5level [%thread] [%logger] %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+    <logger name="ca.firefly" level="${demo.log.level:warn}" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+	
+	<!-- ======================= -->
+	<!-- Setup the Root category -->
+	<!-- ======================= -->
+
+    <root level="WARN">       
+        <appender-ref ref="STDOUT" />
+    </root>           
+</configuration>
